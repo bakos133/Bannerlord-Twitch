@@ -1,6 +1,10 @@
 ﻿using HarmonyLib;
+using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
+using TaleWorlds.Engine;
+using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace BannerlordTwitch.Helpers
 {
@@ -43,6 +47,7 @@ namespace BannerlordTwitch.Helpers
             // Not sure which of these (if either of them) is actually helpful here
             agent.AgentVisuals.LazyUpdateAgentRendererData();
             agent.AgentVisuals.UpdateSkeletonScale((int)agent.SpawnEquipment.BodyDeformType);
+            agent.AgentVisuals.UseScaledWeapons(true);
 
             // if (agent.IsMount)
             // {

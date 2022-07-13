@@ -17,38 +17,39 @@ namespace BannerlordTwitch
 {
     public sealed class AgentModifierConfig : IDocumentable, ICloneable
     {
-        [LocDisplayName("{=JzII0KRZ}Scale Percent"), 
+        [LocDisplayName("{=JzII0KRZ}Scale Percent"),
          LocDescription("{=fc1SmPXH}Changes the size of the target"),
          UIRange(50, 150, 5),
          Editor(typeof(SliderFloatEditor), typeof(SliderFloatEditor)),
          PropertyOrder(1), UsedImplicitly]
         public float ScalePercent { get; set; } = 100f;
-        
-        [LocDisplayName("{=0vqiI434}Apply To Mount"), 
-         LocDescription("{=U0wJHDSa}Apply to the mount of the target, instead of the target themselves (only some properties are valid on mounts)"), 
+
+        [LocDisplayName("{=0vqiI434}Apply To Mount"),
+         LocDescription(
+             "{=U0wJHDSa}Apply to the mount of the target, instead of the target themselves (only some properties are valid on mounts)"),
          PropertyOrder(2), UsedImplicitly]
         public bool ApplyToMount { get; set; }
 
-        [LocDisplayName("{=RdCw0xo9}Properties"), 
-         LocDescription("{=ZKN8fZsA}Properties to change, and how much by"), 
+        [LocDisplayName("{=RdCw0xo9}Properties"),
+         LocDescription("{=ZKN8fZsA}Properties to change, and how much by"),
          Editor(typeof(DefaultCollectionEditor), typeof(DefaultCollectionEditor)),
          PropertyOrder(3), UsedImplicitly]
         public ObservableCollection<PropertyModifierDef> Properties { get; set; } = new();
-        
-        [LocDisplayName("{=iPI9zoqR}Skills"), 
-         LocDescription("{=PanMmDx9}Skills to change, and how much by (these aren't compatible with Apply To Mount)"), 
+
+        [LocDisplayName("{=iPI9zoqR}Skills"),
+         LocDescription("{=PanMmDx9}Skills to change, and how much by (these aren't compatible with Apply To Mount)"),
          Editor(typeof(DefaultCollectionEditor), typeof(DefaultCollectionEditor)),
          PropertyOrder(3), UsedImplicitly]
         public ObservableCollection<SkillModifierDef> Skills { get; set; } = new();
-        
+
         public override string ToString()
         {
-            return (ScalePercent != 100 
-                       ? "{=EkKFoK73}Scale {ScalePercent}%".Translate(("ScalePercent", (int)ScalePercent)) + " " 
+            return (ScalePercent != 100
+                       ? "{=EkKFoK73}Scale {ScalePercent}%".Translate(("ScalePercent", (int) ScalePercent)) + " "
                        : "")
                    + string.Join(" ", Properties.Select(p => p.ToString()))
                    + string.Join(" ", Skills.Select(p => p.ToString()))
-                   + (ApplyToMount? " " + "{=l7w0bPt0}(on mount)".Translate() : "");
+                   + (ApplyToMount ? " " + "{=l7w0bPt0}(on mount)".Translate() : "");
         }
 
         public object Clone()
@@ -57,18 +58,18 @@ namespace BannerlordTwitch
             {
                 ScalePercent = ScalePercent,
                 ApplyToMount = ApplyToMount,
-                Properties = new(Properties.Select(p => (PropertyModifierDef)p.Clone())),
-                Skills = new(Skills.Select(p => (SkillModifierDef)p.Clone())),
+                Properties = new(Properties.Select(p => (PropertyModifierDef) p.Clone())),
+                Skills = new(Skills.Select(p => (SkillModifierDef) p.Clone())),
             };
         }
 
         public void GenerateDocumentation(IDocumentationGenerator generator)
         {
             string mountStr = ApplyToMount ? "{=qhIXgPGK}Mount".Translate() + " " : "";
-            if(ScalePercent != 100)
-                generator.P(ApplyToMount 
-                    ? "{qhIXgPGK}Mount {ScalePercent}% normal size".Translate(("ScalePercent", (int)ScalePercent))
-                    : "{yLT1lfRC}{ScalePercent}% normal size".Translate(("ScalePercent", (int)ScalePercent))
+            if (ScalePercent != 100)
+                generator.P(ApplyToMount
+                    ? "{qhIXgPGK}Mount {ScalePercent}% normal size".Translate(("ScalePercent", (int) ScalePercent))
+                    : "{yLT1lfRC}{ScalePercent}% normal size".Translate(("ScalePercent", (int) ScalePercent))
                 );
             foreach (var p in Properties)
             {
@@ -76,7 +77,7 @@ namespace BannerlordTwitch
             }
         }
     }
-    
+
     public class BLTAgentModifierBehavior : AutoMissionBehavior<BLTAgentModifierBehavior>
     {
         private readonly Dictionary<Agent, List<AgentModifierConfig>> agentModifiersActive = new();
@@ -89,6 +90,7 @@ namespace BannerlordTwitch
                 effects = new();
                 agentModifiersActive.Add(agent, effects);
             }
+
             effects.Add(config);
         }
 
@@ -103,7 +105,7 @@ namespace BannerlordTwitch
                 }
             }
         }
-        
+
         public override void OnAgentDeleted(Agent affectedAgent)
         {
             SafeCall(() =>
@@ -233,6 +235,7 @@ namespace BannerlordTwitch
         {
             AgentHelpers.SetAgentScale(agent, baseScale, scale);
             
+
             // AccessTools.Method(typeof(Agent), "SetInitialAgentScale").Invoke(agent, new []{ (object) scale });
             // // Doesn't have any affect...
             // AgentVisualsNativeData agentVisualsNativeData = agent.Monster.FillAgentVisualsNativeData();
@@ -242,7 +245,7 @@ namespace BannerlordTwitch
             // animationSystemData.NumPaces = 10;
             // agent.SetActionSet(ref agentVisualsNativeData, ref animationSystemData);
         }
-        
+
         private static void ApplyPropertyModifiers(Agent target, AgentModifierConfig config)
         {
             if (config.Properties == null)
@@ -250,7 +253,7 @@ namespace BannerlordTwitch
 
             foreach (var prop in config.Properties)
             {
-                target.AgentDrivenProperties.SetStat(prop.Name, 
+                target.AgentDrivenProperties.SetStat(prop.Name,
                     prop.Apply(target.AgentDrivenProperties.GetStat(prop.Name)));
             }
         }

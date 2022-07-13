@@ -13,6 +13,7 @@
 		<DependedModule Id="Sandbox"/>
 		<DependedModule Id="StoryMode"/>
 		<DependedModule Id="CustomBattle"/>
+		<DependedModule Id="OpenSourceArmory"/>
 	</DependedModules>
 	<SubModules>
 		<SubModule>
@@ -34,6 +35,7 @@
 		<DependedModuleMetadata id="Sandbox" order="LoadBeforeThis" />
 		<DependedModuleMetadata id="StoryMode" order="LoadBeforeThis" />
 		<DependedModuleMetadata id="CustomBattle" order="LoadBeforeThis" />
+		<DependedModuleMetadata id="OpenSourceArmory" order="LoadBeforeThis" />
 	</DependedModuleMetadatas>
 	<Xmls>
 	</Xmls>

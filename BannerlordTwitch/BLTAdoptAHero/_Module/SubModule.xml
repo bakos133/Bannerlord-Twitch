@@ -14,6 +14,7 @@
 		<DependedModule Id="StoryMode"/>
 		<DependedModule Id="CustomBattle"/>
 		<DependedModule Id="BannerlordTwitch"/>
+		<DependedModule Id="OpenSourceArmory"/>
 	</DependedModules>
 	<SubModules>
 		<SubModule>
@@ -36,6 +37,7 @@
 		<DependedModuleMetadata id="StoryMode" order="LoadBeforeThis" />
 		<DependedModuleMetadata id="CustomBattle" order="LoadBeforeThis" />
 		<DependedModuleMetadata id="BannerlordTwitch" order="LoadBeforeThis" />
+		<DependedModuleMetadata id="OpenSourceArmory" order="LoadBeforeThis" />
 	</DependedModuleMetadatas>
 	<Xmls>
 	</Xmls>

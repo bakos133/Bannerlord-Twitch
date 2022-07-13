@@ -73,7 +73,7 @@ namespace BLTAdoptAHero
             [UsedImplicitly]
             public List<SavedEquipment> SavedCustomItems { get; set; } = new();
             
-            [JsonIgnore]
+            
             public List<EquipmentElement> CustomItems { get; set; } = new();
 
             public void PreSave()
