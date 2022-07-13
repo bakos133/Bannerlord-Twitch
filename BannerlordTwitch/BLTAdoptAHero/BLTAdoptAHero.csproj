@@ -125,6 +125,7 @@
         <Compile Include="Actions\Retinue.cs" />
         <Compile Include="Actions\RetireMyHero.cs" />
         <Compile Include="Actions\AuctionItem.cs" />
+        <Compile Include="Actions\SendGoldToViewer.cs" />
         <Compile Include="Actions\SetHeroClass.cs" />
         <Compile Include="Actions\SkillXP.cs" />
         <Compile Include="Actions\SummonHero.cs" />
