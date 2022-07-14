@@ -9,20 +9,21 @@ using TaleWorlds.CampaignSystem;
 namespace BLTAdoptAHero.Actions
 {
     [LocDisplayName("{=0RJuM4U3}Send Gold"),
-     LocDescription("{=noQfp9fH}Allows viewers to give some of their gold to another viewer."), 
+     LocDescription("{=noQfp9fH}Allows viewers to give some of their gold to another viewer."),
      UsedImplicitly]
     public class SendGold : HeroCommandHandlerBase
     {
-        protected override void ExecuteInternal(Hero adoptedHero, ReplyContext context, object config, Action<string> onSuccess, Action<string> onFailure)
+        protected override void ExecuteInternal(Hero adoptedHero, ReplyContext context, object config,
+            Action<string> onSuccess, Action<string> onFailure)
         {
             var heroGold = BLTAdoptAHeroCampaignBehavior.Current.GetHeroGold(adoptedHero);
-            
+
             if (adoptedHero == null)
             {
                 ActionManager.SendReply(context, AdoptAHero.NoHeroMessage);
                 return;
             }
-            
+
             if (string.IsNullOrWhiteSpace(context.Args))
             {
                 ActionManager.SendReply(context,
@@ -39,18 +40,13 @@ namespace BLTAdoptAHero.Actions
             }
 
             var targetHero = BLTAdoptAHeroCampaignBehavior.Current.GetAdoptedHero(argParts[0]);
+            if (targetHero == null)
             {
-                if (targetHero == null)
-                {
-                    ActionManager.SendReply(context, 
-                        "{=vDsYxMKq}Couldn't find recipient '{Name}'".Translate(("Name",argParts[0])));
-                    return;
-                }
-                {
-                    
-                }
+                ActionManager.SendReply(context,
+                    "{=vDsYxMKq}Couldn't find recipient '{Name}'".Translate(("Name", argParts[0])));
+                return;
             }
-
+            
             var goldAmount = int.Parse(argParts[1]);
             if (heroGold >= goldAmount)
             {
@@ -59,16 +55,17 @@ namespace BLTAdoptAHero.Actions
             }
             else
             {
-                ActionManager.SendReply(context, "{=yJJDmt1q}You do not have {Gold} gold. Current gold amount is {CurrentGold}"
-                    .Translate(("Gold", goldAmount),
-                        ("CurrentGold", heroGold)));
+                ActionManager.SendReply(context,
+                    "{=yJJDmt1q}You do not have {Gold} gold. Current gold amount is {CurrentGold}"
+                        .Translate(("Gold", goldAmount),
+                            ("CurrentGold", heroGold)));
             }
-            
+
             ActionManager.SendNonReply(context,
                 "{=LYO2z7eu}'{GoldAmount}' was transferred from @{FromHero} to @{ToHero}"
                     .Translate(
                         ("GoldAmount", goldAmount),
-                        ("FromHero", adoptedHero.FirstName), 
+                        ("FromHero", adoptedHero.FirstName),
                         ("ToHero", targetHero.FirstName)));
         }
 
