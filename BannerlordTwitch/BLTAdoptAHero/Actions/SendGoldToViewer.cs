@@ -59,7 +59,9 @@ namespace BLTAdoptAHero.Actions
             }
             else
             {
-                
+                ActionManager.SendReply(context, "{=yJJDmt1q}You do not have {Gold} gold. Current gold amount is {CurrentGold}"
+                    .Translate(("Gold", goldAmount),
+                        ("CurrentGold", heroGold)));
             }
             
             ActionManager.SendNonReply(context,
