@@ -13,14 +13,14 @@ namespace BLTAdoptAHero
     [LocDisplayName("{=tLSFX9Xc}Retinue"),
      LocDescription("{=bhC3VcmU}Add and improve adopted heroes retinue"), 
      UsedImplicitly]
-    public class Retinue : ActionHandlerBase
+    public class UpRetinue : ActionHandlerBase
     {
         private class Settings : IDocumentable
         {
             [LocDisplayName("{=tLSFX9Xc}Retinue"),
              LocDescription("{=iNoFrKsN}Retinue Upgrade Settings"), 
              PropertyOrder(1), ExpandableObject, Expand, UsedImplicitly]
-            public BLTAdoptAHeroCampaignBehavior.RetinueSettings Retinue { get; set; } = new();
+            public BLTAdoptAHeroCampaignBehavior.RetinueSettings UpRetinue { get; set; } = new();
 
             [LocDisplayName("{=nIsuuFMC}All By Default"),
              LocDescription("{=mJSGvWlR}Whether this action should attempt to buy/upgrade as many times as possible when called with no parameter."), 
@@ -29,7 +29,7 @@ namespace BLTAdoptAHero
             
             public void GenerateDocumentation(IDocumentationGenerator generator)
             {
-                Retinue.GenerateDocumentation(generator);
+                UpRetinue.GenerateDocumentation(generator);
             }
         }
 
@@ -67,7 +67,7 @@ namespace BLTAdoptAHero
             }
             
             (bool success, string status) = BLTAdoptAHeroCampaignBehavior.Current
-                .Retinue(adoptedHero, settings.Retinue, numToUpgrade);
+                .UpgradeRetinue(adoptedHero, settings.UpRetinue, numToUpgrade);
             if (success)
             {
                 onSuccess(status);

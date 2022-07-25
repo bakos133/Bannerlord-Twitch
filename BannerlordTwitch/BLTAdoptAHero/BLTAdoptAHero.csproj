@@ -130,6 +130,7 @@
         <Compile Include="Actions\SkillXP.cs" />
         <Compile Include="Actions\SummonHero.cs" />
         <Compile Include="Actions\TournamentBet.cs" />
+        <Compile Include="Actions\UpRetinue.cs" />
         <Compile Include="Actions\UsePower.cs" />
         <Compile Include="Actions\Util\CustomItems.cs" />
         <Compile Include="Actions\Util\HeroClassDef.cs" />

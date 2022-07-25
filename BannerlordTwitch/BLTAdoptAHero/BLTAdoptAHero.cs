@@ -44,9 +44,9 @@ namespace BLTAdoptAHero
             GlobalTournamentConfig.Register();
             GlobalHeroClassConfig.Register();
             GlobalHeroPowerConfig.Register();
-            
-            TournamentHub.Register();
-            MissionInfoHub.Register();
+             
+            TournamentHub.Register(); 
+            MissionInfoHub.Register(); 
         }
 
         public override void OnMissionBehaviorInitialize(Mission mission)
